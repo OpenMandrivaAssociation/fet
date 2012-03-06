@@ -1,6 +1,6 @@
 Name:		fet
 Summary:	Free Timetabling Software
-Version:	5.16.0
+Version:	5.16.1
 Release:	1
 Group:		Education
 License:	GPLv2+
@@ -56,7 +56,13 @@ StartupNotify=true
 Categories=Office;
 EOF
 
-%files
+%if %{mdvver} >= 201200
+%find_lang %{name} --with-qt
+%else
+touch %{name}.lang
+%endif
+
+%files -f %{name}.lang
 %doc doc/algorithm/*.txt
 %doc AUTHORS ChangeLog CONTRIBUTORS COPYING
 %doc README REFERENCES THANKS TODO TRANSLATORS
@@ -67,6 +73,7 @@ EOF
 %{_datadir}/%{name}/examples
 %{_mandir}/man1/fet.1.xz
 /usr/share/fet/translations/fet_untranslated.qm
+%if %{mdvver} <= 201100
 %lang(ar)/usr/share/fet/translations/fet_ar.qm
 %lang(ca)/usr/share/fet/translations/fet_ca.qm
 %lang(da)/usr/share/fet/translations/fet_da.qm
@@ -94,3 +101,4 @@ EOF
 %lang(tr)/usr/share/fet/translations/fet_tr.qm
 %lang(uk)/usr/share/fet/translations/fet_uk.qm
 %lang(vi)/usr/share/fet/translations/fet_vi.qm
+%endif
