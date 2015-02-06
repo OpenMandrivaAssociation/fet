@@ -1,7 +1,7 @@
 Name:		fet
 Summary:	Free Timetabling Software
 Version:	5.18.2
-Release:	1
+Release:	2
 Group:		Education
 License:	GPLv2+
 URL:		http://lalescu.ro/liviu/fet/
