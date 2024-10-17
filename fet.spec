@@ -4,7 +4,7 @@ Version:	5.18.2
 Release:	2
 Group:		Education
 License:	GPLv2+
-URL:		http://lalescu.ro/liviu/fet/
+URL:		https://lalescu.ro/liviu/fet/
 Source0:	http://lalescu.ro/liviu/fet/download/%{name}-%{version}.tar.bz2
 BuildRequires:	qt4-devel
 
