@@ -1,12 +1,21 @@
+%global debug_package %{nil}
+
 Name:		fet
 Summary:	Free Timetabling Software
-Version:	5.18.2
-Release:	2
+Version:	7.0.3
+Release:	1
 Group:		Education
 License:	GPLv2+
 URL:		https://lalescu.ro/liviu/fet/
 Source0:	http://lalescu.ro/liviu/fet/download/%{name}-%{version}.tar.bz2
-BuildRequires:	qt4-devel
+BuildRequires:  qmake-qt6
+BuildRequires:  make
+BuildRequires:  pkgconfig(Qt6Core)
+BuildRequires:  pkgconfig(Qt6Gui)
+BuildRequires:  pkgconfig(Qt6Network)
+BuildRequires:  pkgconfig(Qt6Widgets)
+BuildRequires:  pkgconfig(Qt6PrintSupport)
+
 
 %description
 FET is free timetabling software (licensed under GNU GPL v2 or later). This
@@ -17,53 +26,33 @@ FET can mean "Free Educational Timetabling" (the "E" in the middle may
 also stand for other words, based on your personal preference).
 
 %prep
-%setup -q
+%setup 
 
 %build
-%qmake_qt4
-%make
+qmake-qt6 fet.pro
+%make_build
 
 %install
-# manual installation, make file doesn't provide it
-%__install -d -m 755 %{buildroot}%{_datadir}/%{name}
-%__install -d -m 755 %{buildroot}%{_datadir}/%{name}/translations
-# moved man file to /usr/share/man/man1/
-xz -k 'doc/fet.1'
-%__install -D -m 644 'doc/fet.1.xz' %{buildroot}%{_mandir}/man1/fet.1.xz
-# installing translations
-%__cp  translations/*.qm %{buildroot}%{_datadir}/%{name}/translations/
-# installing binary.
-%__install -D -m 755 fet %{buildroot}%{_bindir}/fet
-%__install -d -m 755 %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/fet.desktop << EOF
-[Desktop Entry]
-Type=Application
-Name=Timetable Generator
-Name[de]=Stundenplan Generator
-Name[ru]=Генератор расписаний
-GenericName=Timetable software for schools
-GenericName[de]=Stundenplan Generator
-GenericName[ru]=Генератор расписаний
-Comment=Generate timetables for educational institutions
-Comment[de]=Erzeugt Stundenplne fr Lehranstalten
-Comment[ru]=Составление расписаний для учебных заведений
-Icon=fet
-Exec=fet
-Terminal=false
-StartupNotify=true
-Categories=Office;
-EOF
+%make_install \
+    INSTALL_ROOT=%{buildroot}
+
+%__install -d %{buildroot}%{_datadir}/licenses/%{name}
+mv %{buildroot}%{_datadir}/doc/%{name}/licenses/*  %{buildroot}%{_datadir}/licenses/%{name}
+rmdir %{buildroot}%{_datadir}/doc/%{name}/licenses
+rm %{buildroot}%{_datadir}/doc/%{name}/COPYING
 
 %find_lang %{name} --with-qt
 
 %files -f %{name}.lang
-%doc doc/algorithm/*.txt
-%doc AUTHORS ChangeLog COPYING
-%doc README REFERENCES THANKS TODO TRANSLATORS
-%doc examples
-%{_bindir}/fet
-%{_datadir}/applications/fet.desktop
+%{_datadir}/doc/%{name}/*
+%{_datadir}/licenses/%{name}/*
+%license COPYING 
+%{_bindir}/fet*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/translations
-%{_datadir}/%{name}/translations/fet_untranslated.qm
-%{_mandir}/man1/fet.1.xz
+%{_datadir}/%{name}/examples/*
+%{_datadir}/applications/fet.desktop
+%{_datadir}/icons/hicolor/*/apps/fet.*
+%{_mandir}/man1/fet*.1.zst
+
+
