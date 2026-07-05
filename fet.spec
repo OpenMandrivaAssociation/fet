@@ -2,7 +2,7 @@
 
 Name:		fet
 Summary:	Free Timetabling Software
-Version:	7.0.3
+Version:	7.9.0
 Release:	1
 Group:		Education
 License:	GPLv2+
