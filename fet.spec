@@ -53,6 +53,7 @@ rm %{buildroot}%{_datadir}/doc/%{name}/COPYING
 %{_datadir}/%{name}/examples/*
 %{_datadir}/applications/fet.desktop
 %{_datadir}/icons/hicolor/*/apps/fet.*
+%{_datadir}/mime/packages/fet.xml
 %{_mandir}/man1/fet*.1.zst
 
 
