@@ -7,7 +7,7 @@ Release:	1
 Group:		Education
 License:	GPLv2+
 URL:		https://lalescu.ro/liviu/fet/
-Source0:	http://lalescu.ro/liviu/fet/download/%{name}-%{version}.tar.bz2
+Source0:	http://lalescu.ro/liviu/fet/download/%{name}-%{version}.tar.xz
 BuildRequires:  qmake-qt6
 BuildRequires:  make
 BuildRequires:  pkgconfig(Qt6Core)
